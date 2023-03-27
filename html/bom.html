@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM</title>
+</head>
+<body>
+<h1>Browser Object Model (BOM)</h1>
+<article>
+    <h2>Navigator</h2>
+    <div id="position"></div>
+    <details>
+        <summary>Properties</summary>
+        <ul id="navigator"></ul>
+    </details>
+</article>
+<article>
+    <h2>Location</h2>
+    <div id="timer">0</div>
+    <button id="reload">Reload</button>
+    <details>
+        <summary>Properties</summary>
+        <ul id="location"></ul>
+    </details>
+</article>
+<article>
+    <h2>History</h2>
+    <details>
+        <summary>Properties</summary>
+        <ul id="history"></ul>
+    </details>
+</article>
+<article>
+    <h2>Screen</h2>
+    <details open>
+        <summary>Properties</summary>
+        <ul id="screen"></ul>
+    </details>
+</article>
+<script>
+    const printProperties = (obj, el) => {
+        for (let prop in obj) {
+            const li = document.createElement('li');
+            const strong = document.createElement('strong');
+            li.append(`${prop}: `);
+            strong.append(`${obj[prop]}`);
+            li.append(strong);
+            el.append(li);
+        }
+    };
+    printProperties(navigator, document.getElementById('navigator'));
+    //printProperties(navigator.geolocation, document.getElementById('navigator'));
+    navigator.geolocation.getCurrentPosition(({coords: {longitude, latitude}}) => {
+        document.getElementById("position").innerHTML = `Longitude: ${longitude} Latitude: ${latitude}`;
+    }, error => {
+        console.error(error);
+    });
+
+    printProperties(location, document.getElementById('location'));
+    document.getElementById("reload").addEventListener("click", e => {
+       location.reload()
+    });
+
+    function getTimerUpdater() {
+        let count = 0;
+        return () => {
+            return ++count;
+        };
+    }
+    const timerUpdater = getTimerUpdater()
+    const timer = document.getElementById("timer");
+    setInterval(() => {
+        timer.innerHTML = `${timerUpdater()}`;
+    }, 1000);
+
+    setTimeout(() => {
+        // location.replace('https://itstep.dp.ua');
+        // location.assign('https://itstep.dp.ua');
+        // location = 'https://itstep.dp.ua';
+    }, 10000);
+
+    printProperties(history, document.getElementById('history'));
+    printProperties(screen, document.getElementById('screen'));
+    console.log(screen.width);
+    console.log(screen['width']);
+</script>
+</body>
+</html>
