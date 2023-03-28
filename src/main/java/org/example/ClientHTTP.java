@@ -6,9 +6,8 @@ import java.net.Socket;
 
 public class ClientHTTP {
     public static void main(String[] args) {
-        HttpClient httpClient = new HttpClient("localhost", 10000);
+        HttpClient httpClient = new HttpClient("localhost", 8080);
         String response = httpClient.get("/HW_Wiki.html");
-        //System.out.println("-= Response =-");
         System.out.println(response);
     }
 }

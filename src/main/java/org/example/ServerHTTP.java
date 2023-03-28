@@ -24,7 +24,7 @@ import java.util.Date;
  */
 public class ServerHTTP {
 
-    public static final int PORT = 10000;
+    public static final int PORT = 8080;
 
 
 
